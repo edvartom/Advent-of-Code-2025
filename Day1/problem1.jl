@@ -1,14 +1,10 @@
 "Takes a rotation and a current position, and returns the new position."
 function new_position(old_position::Int, rotation::String)
-    println(rotation)
     nr_of_steps::Int = parse(Int, rotation[2:end])
-    println(rotation)
     new_position::Int = 0
-    println(typeof(rotation[1]), typeof('L'))
     if rotation[1] == 'L'
         new_position = old_position - nr_of_steps
     else
-        print("Helo")
         new_position = old_position + nr_of_steps
     end
     while new_position < 0
@@ -19,3 +15,18 @@ function new_position(old_position::Int, rotation::String)
     end
     return new_position
 end
+
+"For each line in the txt-file, update the position. Count the zeros and find the password"
+function change_position(filepath::String)
+    current_point::Int = 50
+    password::Int = 0
+    for rotation::String in eachline(filepath)
+        current_point = new_position(current_point, rotation)
+        if current_point == 0
+            password += 1
+        end
+    end
+    return password
+end
+
+change_position("Day1/input1.txt")
