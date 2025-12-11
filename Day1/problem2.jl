@@ -1,3 +1,5 @@
+### This file needs to be looked over, since I deleted the changes
+
 "Takes a rotation and a current position, and returns the new position."
 function new_position(old_position::Int,
                       rotation::String,
