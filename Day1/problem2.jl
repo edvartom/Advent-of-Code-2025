@@ -14,13 +14,17 @@ function new_position(old_position::Int,
     else
         new_position = old_position + nr_of_steps
     end
-    while new_position < min_position
+    if new_position == 0
+        counter += 1
+    else
+        while new_position < min_position
         new_position += nr_of_positions
         counter += 1
-    end
-    while new_position > max_position
-        new_position -= nr_of_positions
-        counter += 1
+        end
+        while new_position > max_position
+            new_position -= nr_of_positions
+            counter += 1
+        end
     end
     return new_position, counter
 end
