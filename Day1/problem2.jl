@@ -11,21 +11,27 @@ function new_position(old_position::Int,
     counter::Int = 0
     if rotation[1] == 'L'
         new_position = old_position - nr_of_steps
+        #println("rotation[1]=", rotation[1], "=L")
     else
         new_position = old_position + nr_of_steps
+        #println("rotation[1]=", rotation[1], "=R")
     end
     if new_position == 0
         counter += 1
+        #println("counter+=1")
     else
         while new_position < min_position
-        new_position += nr_of_positions
-        counter += 1
+            #println("new_position < min_position:$new_position < $min_position")
+            new_position += nr_of_positions
+            counter += 1
         end
         while new_position > max_position
+            #println("new_position > max_position")
             new_position -= nr_of_positions
             counter += 1
         end
     end
+    print("position1: ", new_position)
     return new_position, counter
 end
 

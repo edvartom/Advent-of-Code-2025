@@ -34,6 +34,7 @@ function new_position_log(old_position::Int,
             new_position = nr_of_steps % 100
         end
     end
+    println(", position3: ", new_position)
     return new_position, counter
 end
 

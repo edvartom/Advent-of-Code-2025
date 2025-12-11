@@ -8,20 +8,23 @@ function new_position_mod(old_position::Int,
     counter::Int = 0
     if rotation[1] == 'L'
         new_position = old_position - nr_of_steps
-        new_position %= nr_of_positions
         counter += div(new_position, nr_of_positions)
+        new_position %= nr_of_positions
         if new_position < 0
             new_position += nr_of_positions
+            counter += 1
+        elseif new_position == 0
+            counter += 1
         end
-        counter += 1 # Either it is at zero, or it passed zero in the above if-statement
     else
         new_position = old_position + nr_of_steps
-        new_position %= nr_of_positions
         counter += div(new_position, nr_of_positions)
+        new_position %= nr_of_positions
         if new_position == 0
             counter += 1
         end
     end
+    print(", position2: ", new_position)
     return new_position, counter
 end
 
