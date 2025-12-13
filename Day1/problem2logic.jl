@@ -5,7 +5,6 @@ function new_position_log(old_position::Int,
     nr_of_steps::Int = parse(Int, rotation[2:end])
     new_position::Int = 0
     counter::Int = 0
-    nr_of_rounds::Int = 0
     if rotation[1] == 'L'
         if nr_of_steps < old_position
             new_position = old_position - nr_of_steps
@@ -14,11 +13,12 @@ function new_position_log(old_position::Int,
             counter += 1
         else
             nr_of_steps -= old_position
-            counter +=1
-            nr_of_rounds = div(nr_of_steps, 100)
-            counter += nr_of_rounds
+            counter += 1
+            counter += div(nr_of_steps, 100)
             steps_left = nr_of_steps % 100
-            new_position = 100 - steps_left
+            if steps_left != 0
+                new_position = 100 - steps_left
+            end
         end
     else
         if nr_of_steps < (100 - old_position)
@@ -29,12 +29,10 @@ function new_position_log(old_position::Int,
         else
             nr_of_steps -= (100 - old_position)
             counter += 1
-            nr_of_rounds = div(nr_of_steps, 100)
-            counter += nr_of_rounds
+            counter += div(nr_of_steps, 100)
             new_position = nr_of_steps % 100
         end
     end
-    println(", position3: ", new_position)
     return new_position, counter
 end
 

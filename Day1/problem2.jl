@@ -18,20 +18,27 @@ function new_position(old_position::Int,
     end
     if new_position == 0
         counter += 1
-        #println("counter+=1")
+        println("counter1+=1")
     else
         while new_position < min_position
             #println("new_position < min_position:$new_position < $min_position")
             new_position += nr_of_positions
+            if old_position != 0
+                counter += 1
+            end
+            println("counter2+=1")
+            if new_position == 0
             counter += 1
+            println("counter3+=1")
+            end
         end
         while new_position > max_position
             #println("new_position > max_position")
             new_position -= nr_of_positions
             counter += 1
+            println("counter4+=1")
         end
     end
-    print("position1: ", new_position)
     return new_position, counter
 end
 
@@ -42,9 +49,6 @@ function change_position(filepath::String, starting_point::Int = 50)
     for rotation::String in eachline(filepath)
         current_point, counter = new_position(current_point, rotation)
         password += counter
-        if current_point == 0
-            password += 1
-        end
     end
     return password
 end

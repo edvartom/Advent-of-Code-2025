@@ -15,15 +15,10 @@ function change_position_comp(filepath::String, starting_point::Int = 50)
         # Second function
         current_point2, counter = new_position_mod(current_point2, rotation)
         password2 += counter
-        if current_point2 == 0
-            password1 += 1
-        end
         # Third function
         current_point3, counter = new_position_log(current_point3, rotation)
         password3 += counter
-        if current_point3 == 0
-            password3 += 1
-        end
+        println("position1: ", current_point1, " position2: ", current_point2, " position3: ", current_point3)
         if password1 != password2
             print("i=", i, "\t")
             println("password1 is ", password1, " but password2 is ", password2, ", password3 is ", password3)
@@ -41,4 +36,4 @@ function change_position_comp(filepath::String, starting_point::Int = 50)
     return password1, password2, password3
 end
 
-change_position_comp("Day1/input1.txt")
+change_position_comp("Day1/input1test2.txt")
