@@ -10,7 +10,7 @@ function change_position_comp(filepath::String, starting_point::Int = 50)
     for rotation::String in eachline(filepath)
         i += 1
         # First function
-        current_point1, counter = new_position(current_point1, rotation)
+        current_point1, counter = new_position_and_count_log2(current_point1, rotation)
         password1 += counter
         # Second function
         current_point2, counter = new_position_mod(current_point2, rotation)
@@ -19,21 +19,21 @@ function change_position_comp(filepath::String, starting_point::Int = 50)
         current_point3, counter = new_position_log(current_point3, rotation)
         password3 += counter
         println("position1: ", current_point1, " position2: ", current_point2, " position3: ", current_point3)
-        if password1 != password2
-            print("i=", i, "\t")
-            println("password1 is ", password1, " but password2 is ", password2, ", password3 is ", password3)
-            break
-        elseif password1 != password3
-            print("i=", i, "\t")
-            println("password1 is ", password1, " but password3 is ", password3, ", password2 is ", password2)
-            break
-        elseif password2 != password3
-            print("i=", i, "\t")
-            println("password2 is ", password2, " but password3 is ", password3, ", password1 is ", password1)
-            break
-        end
+        # if password1 != password2
+        #     print("i=", i, "\t")
+        #     println("password1 is ", password1, " but password2 is ", password2, ", password3 is ", password3)
+        #     break
+        # elseif password1 != password3
+        #     print("i=", i, "\t")
+        #     println("password1 is ", password1, " but password3 is ", password3, ", password2 is ", password2)
+        #     break
+        # elseif password2 != password3
+        #     print("i=", i, "\t")
+        #     println("password2 is ", password2, " but password3 is ", password3, ", password1 is ", password1)
+        #     break
+        # end
     end
     return password1, password2, password3
 end
 
-change_position_comp("Day1/input1test2.txt")
+change_position_comp("Day1/input1.txt")
