@@ -1,56 +1,68 @@
-### This file needs to be looked over, since I deleted the changes
+"""
+# Arguments
 
-"Takes a rotation and a current position, and returns the new position."
-function new_position(old_position::Int,
-                      rotation::String,
-                      nr_of_positions::Int = 100,
-                      min_position::Int = 0,
-                      max_position::Int = 99)
+- `old_position::Integer`: The previous position of the dial.
+- `rotation`: The rotation given to get to the next position.
+
+# Returns
+- `::Integer`: The new position of the dial.
+- `::Integer`: The number of times the dial pointed at zero to get to the new position.
+"""
+function new_position_and_count_log2(old_position::Int, rotation::String)
+    direction::Char = rotation[1]
     nr_of_steps::Int = parse(Int, rotation[2:end])
-    new_position::Int = min_position
-    counter::Int = 0
-    if rotation[1] == 'L'
-        new_position = old_position - nr_of_steps
-        #println("rotation[1]=", rotation[1], "=L")
+    new_pos = new_position_log2(old_position, direction, nr_of_steps)
+    counter = count_log2(old_position, direction, nr_of_steps)
+    return new_pos, counter
+end
+
+"Finds the new position of the dial"
+function new_position_log2(old_position::Int, direction::Char, nr_of_steps::Int)
+    new_pos::Int = 0
+    steps_left::Int = nr_of_steps % 100
+    if direction == 'L'
+        if steps_left <= old_position
+            new_pos = old_position - steps_left
+        else
+            new_pos = old_position - steps_left + 100
+        end
     else
-        new_position = old_position + nr_of_steps
-        #println("rotation[1]=", rotation[1], "=R")
+        if steps_left < (100 - old_position)
+            new_pos = old_position + steps_left
+        else
+            new_pos = old_position + steps_left - 100
+        end
     end
-    if new_position == 0
+    return new_pos
+end
+
+"""
+Counts the number of times the dial points at zero 
+for a given initial position and rotation.
+"""
+function count_log2(old_position::Int, direction::Char, nr_of_steps::Int)
+    steps_left = nr_of_steps % 100
+    counter::Int = div(nr_of_steps, 100)
+    if direction == 'L' && steps_left >= old_position && old_position != 0
         counter += 1
-        println("counter1+=1")
-    else
-        while new_position < min_position
-            #println("new_position < min_position:$new_position < $min_position")
-            new_position += nr_of_positions
-            if old_position != 0
-                counter += 1
-            end
-            println("counter2+=1")
-            if new_position == 0
-            counter += 1
-            println("counter3+=1")
-            end
-        end
-        while new_position > max_position
-            #println("new_position > max_position")
-            new_position -= nr_of_positions
-            counter += 1
-            println("counter4+=1")
-        end
+    elseif direction == 'R' && steps_left >= (100 - old_position) && old_position != 0
+        counter += 1
     end
-    return new_position, counter
+    return counter
 end
 
-"For each line in the txt-file, update the position. Count the zeros and find the password"
-function change_position(filepath::String, starting_point::Int = 50)
-    current_point::Int = starting_point
-    password::Int = 0
+"""
+For each line in the txt-file, update the position.
+Count the zeros and find the password
+"""
+function change_position_comp(filepath::String, starting_point::Int = 50)
+    current_point1::Int = starting_point
+    password1::Int = 0
     for rotation::String in eachline(filepath)
-        current_point, counter = new_position(current_point, rotation)
-        password += counter
+        current_point1, counter = new_position_and_count_log2(current_point1, rotation)
+        password1 += counter
     end
-    return password
+    return password1
 end
 
-change_position("Day1/input1.txt")
+change_position_comp("Day1/input1.txt")

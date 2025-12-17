@@ -1,5 +1,9 @@
-When I tried whith five-hundred-and-something this was already too high.
-5359 is wrong. 
+5820 is right!!
 
 TODO:
-Write a code that rotates to the original point x nr of times, split between the case where starting point is zero and starting point>0.
+Delete unused files
+Check that it works
+Change name on functions to simpler ones
+Cange new_position func name and variable name
+Change pointer to dial
+Delete comment-file
