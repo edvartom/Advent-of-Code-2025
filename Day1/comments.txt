@@ -1,9 +1,0 @@
-5820 is right!!
-
-TODO:
-Delete unused files
-Check that it works
-Change name on functions to simpler ones
-Cange new_position func name and variable name
-Change pointer to dial
-Delete comment-file
