@@ -1,22 +1,20 @@
-# Getting the input
-function get_input(filepath::String)
+function get_invalid_ids1(filepath::String)
     input::String = readline(filepath)
-    # Make a list of all ranges
-    ranges::Vector{String} = String.(split(input, ","))
-    answer::Int = 0
+    ranges::Vector{String} = String.(split(input, ","))         # Make a list of all ranges
+    sum_ids::Int = 0 # Sum of invalid ids
     for range::String in ranges
-        min_int::Int, max_int::Int = parse.(Int, String.(split(range, "-")))
-        i::Int = min_int
-        while i < max_int
+        minmax_val = parse.(Int, String.(split(range, "-")))
+        min_val::Int, max_val::Int = minmax_val                 # Finding minimum and maximum value in each range
+        for i in [min_val:max_val;]
             i_str::String = string(i)
-            if i_str[1:div(length(i_str) + 1, 2)] == i_str[div(length(i_str) + 1, 2) + 1:length(i_str)]
-                answer += i
-                println(i)
+            split_idx::Int = div(length(i_str) + 1, 2)          # Split index
+            # If the first and the last part of the number are equal ...
+            if i_str[1:split_idx] == i_str[split_idx + 1:length(i_str)]
+                sum_ids += i                                    # This is an invalid ID
             end
-            i += 1
         end
     end
-    return answer
+    return sum_ids
 end
 
-get_input("Day2/input.txt")
+get_invalid_ids1("Day2/input.txt")
